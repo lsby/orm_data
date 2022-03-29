@@ -1,6 +1,6 @@
 {
-    "name": "orm_data",
-    "version": "0.0.1",
+    "name": "@lsby/orm_data",
+    "version": "0.0.2",
     "description": "",
     "main": "dist/index.js",
     "scripts": {
