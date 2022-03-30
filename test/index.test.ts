@@ -4,10 +4,16 @@ import * as tools from '@lsby/js_tools'
 
 describe('测试组', function () {
     it('对象转关系', async function () {
-        var x = 对象转关系<{ a: number; b: [number, number]; c: { d: number; e: [number, string] } }>([
-            { a: 1, b: [2, 3], c: { d: 4, e: [5, '6'] } },
+        var x1 = 对象转关系([{ a: 1, b: [2, 3], c: { d: 4, e: [5, 6] } }])
+        tools.断言文本相等(x1, [
+            { a: 1, b: 2, d: 4, e: 5 },
+            { a: 1, b: 2, d: 4, e: 6 },
+            { a: 1, b: 3, d: 4, e: 5 },
+            { a: 1, b: 3, d: 4, e: 6 },
         ])
-        tools.断言文本相等(x, [{ a: 1, b_0: 2, b_1: 3, d: 4, e_0: 5, e_1: '6' }])
+
+        var x2 = 对象转关系([{ a: 1, b: { c: 2, d: 3 } }])
+        tools.断言文本相等(x2, [{ a: 1, c: 2, d: 3 }])
     })
     it('关系转对象', async function () {
         var x = 关系转对象(
