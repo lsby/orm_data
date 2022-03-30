@@ -13,17 +13,29 @@ import _ from 'lodash'
 输入:
 ```
 var x = 对象转关系([
-    { a: 1, b: [2, 3], c: { d: 4, e: [5, 6] } }
+    {
+        a: 1,
+        b: [2, 3],
+        c: { d: 4, e: [5, 6] },
+        f: [
+            { f1: 'a', f2: 'b' },
+            { f1: 'c', f2: 'd' },
+        ],
+    },
 ])
 ```
 
 得到:
 ```
 [
-    { a: 1, b: 2, d: 4, e: 5 },
-    { a: 1, b: 2, d: 4, e: 6 },
-    { a: 1, b: 3, d: 4, e: 5 },
-    { a: 1, b: 3, d: 4, e: 6 },
+    { a: 1, b: 2, d: 4, e: 5, f1: 'a', f2: 'b' },
+    { a: 1, b: 2, d: 4, e: 5, f1: 'c', f2: 'd' },
+    { a: 1, b: 2, d: 4, e: 6, f1: 'a', f2: 'b' },
+    { a: 1, b: 2, d: 4, e: 6, f1: 'c', f2: 'd' },
+    { a: 1, b: 3, d: 4, e: 5, f1: 'a', f2: 'b' },
+    { a: 1, b: 3, d: 4, e: 5, f1: 'c', f2: 'd' },
+    { a: 1, b: 3, d: 4, e: 6, f1: 'a', f2: 'b' },
+    { a: 1, b: 3, d: 4, e: 6, f1: 'c', f2: 'd' },
 ]
 ```
 */
@@ -90,7 +102,7 @@ type _计算类型<对象键值们> = 对象键值们 extends []
     : 对象键值们 extends [infer a, ...infer as]
     ? a extends [`${infer key}`, infer value]
         ? value extends any[]
-            ? Record<key, value[0]> & _计算类型<as>
+            ? 计算类型<Record<key, value[0]>> & _计算类型<as>
             : value extends Record<any, any>
             ? 计算类型<value & _计算类型<as>>
             : Record<key, value> & _计算类型<as>
