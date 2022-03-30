@@ -29,7 +29,7 @@ export function 重命名列<A extends Record<string, b>, b, 名称 extends keyo
     关系: A[],
     名称: 名称,
     新名称: 新名称,
-): 计算返回值_重命名列<A, 名称, 新名称> {
+): 计算返回值_重命名列<A, 名称, 新名称>[] {
     var _关系 = _.cloneDeep(关系)
 
     var c = _关系.map((a) => ({
@@ -84,7 +84,7 @@ var x = 删除列(
 export function 删除列<A extends Record<string, b>, b, 名称 extends keyof A>(
     关系: A[],
     名称: 名称,
-): 计算返回值_删除列<A, 名称> {
+): 计算返回值_删除列<A, 名称>[] {
     var c = _.cloneDeep(关系)
 
     for (var a of c) {
@@ -145,7 +145,7 @@ export function 合并列<
     列1: 列1,
     列2: 列2,
     合并函数: (a: 计算参数类型<A, 列1>, b: 计算参数类型<A, 列2>) => 函数返回,
-): 计算返回值_合并列<A, 新名称, 函数返回> {
+): 计算返回值_合并列<A, 新名称, 函数返回>[] {
     var c = _.cloneDeep(关系)
 
     var r = c.map((a) => ({
