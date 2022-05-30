@@ -48,16 +48,14 @@ export default function 关系转对象<A extends { [key: string]: unknown }, B 
     主码: B,
     合并属性: C,
 ): { [K in keyof A]: 对表合并行_返回值计算<C, K, A> }[] {
-    return 数组等价去重(关系.map((a) => a[主码]))
-        .filter((a) => a != null)
-        .map((主字段值) => {
-            var 子表 = 关系.filter((b) => 等价(b[主码], 主字段值))
-            var 列名们 = Object.keys(关系[0])
-            var 合并后对象 = 列名们.reduce((s, 列名) => {
-                var 结果数组 = 子表.map((a) => a[列名]).filter((a) => a != null)
-                return { ...s, [列名]: !合并属性.includes(列名) ? 结果数组[0] : 结果数组 }
-            }, {} as { [K in keyof A]: A[K][] })
-            return 合并后对象
-        }) as any
+    return 数组等价去重(关系.map((a) => a[主码])).map((主字段值) => {
+        var 子表 = 关系.filter((b) => 等价(b[主码], 主字段值))
+        var 列名们 = Object.keys(关系[0])
+        var 合并后对象 = 列名们.reduce((s, 列名) => {
+            var 结果数组 = 子表.map((a) => a[列名])
+            return { ...s, [列名]: !合并属性.includes(列名) ? 结果数组[0] : 结果数组 }
+        }, {} as { [K in keyof A]: A[K][] })
+        return 合并后对象
+    }) as any
 }
 type 对表合并行_返回值计算<C, K extends keyof A, A> = C extends (infer X)[] ? (K extends X ? A[K][] : A[K]) : never
